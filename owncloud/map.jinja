@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja:ts=2:sw=2
+{% import_yaml "owncloud/defaults.yaml" as default_settings %}
+
+{%- set os         = salt['grains.get']('os') %}
+{%- set osrelease  = salt['grains.get']('osrelease') %}
+{%- set oscodename = salt['grains.get']('oscodename') %}
+
+{## Merge in owncloud pillar ##}
+{% set owncloud_settings = salt['pillar.get'](
+  'owncloud',
+  default=default_settings.owncloud,
+  merge=True)
+%}
+
+{% set os_map = salt['grains.filter_by']({
+    'Debian': {
+        'packages': ['owncloud'],
+        'service': 'apache2',
+        'repo': {
+          'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud_settings.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/ /' ,
+          'file': '/etc/apt/sources.list.d/owncloud.list',
+          'key_url': 'https://download.owncloud.org/download/repositories/Release.key',
+        }
+        
+    },
+}, grain='os_family', merge=salt['pillar.get']('owncloud:lookup'))) %}
+
+{## Merge the flavor_map to the default settings ##}
+{% do salt['defaults.merge'](owncloud_settings,os_map) %}
