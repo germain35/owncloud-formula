@@ -8,7 +8,7 @@
 include:
   - owncloud.service
 
-{%- if mysql_settings.manage_repo %}
+{%- if owncloud_settings.manage_repo %}
   {%- if 'repo' in owncloud_settings and owncloud_settings.repo is mapping %}
 owncloud_repo:
   pkgrepo.managed:
@@ -22,6 +22,6 @@ owncloud_repo:
 
 owncloud_packages:
   pkg.installed:
-    - pkgs: {{owncloud.packages}}
+    - pkgs: {{owncloud_settings.packages}}
     - watch_in:
       - service: owncloud_service

@@ -24,7 +24,7 @@
         }
         
     },
-}, grain='os_family', merge=salt['pillar.get']('owncloud:lookup'))) %}
+}, grain='os_family', merge=salt['pillar.get']('owncloud:lookup')) %}
 
 {## Merge the flavor_map to the default settings ##}
 {% do salt['defaults.merge'](owncloud_settings,os_map) %}
