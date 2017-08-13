@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 owncloud:
-  version: 9.1
+  version: stable
   manage_repo: True

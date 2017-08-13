@@ -1,2 +1,2 @@
 owncloud:
-  version: 9.1
+  version: stable
