@@ -1,0 +1,35 @@
+{%- from "owncloud/map.jinja" import owncloud_settings with context -%}
+<?php
+$CONFIG = array (
+  'updatechecker' => false,
+  'instanceid' => 'oca8oar9inql',
+  'passwordsalt' => 'xTRlcbzbrRd2LRY89MQdVCoXIkzN2k',
+  'secret' => 'W2wHrBUiwx2dZ1PeLnkVL0MuSZR5CQLsFq6+e6rrWyzUdul2',
+  'trusted_domains' => 
+  array (
+    {%- for domain in owncloud_settings.trusted_domains %}
+    {{loop.index0}} => '{{domain}}',
+    {%- endfor %}
+  ),
+  'datadirectory' => '{{owncloud_settings.data_dir}}',
+  'overwrite.cli.url' => 'http://owncloud.yopyop.fr/owncloud',
+  'dbtype' => '{{owncloud_settings.database.type}}',
+  'version' => '9.1.6.2',
+  'dbname' => '{{owncloud_settings.database.name}}',
+  'dbhost' => '{{owncloud_settings.database.host}}',
+  'dbtableprefix' => 'oc_',
+  'dbuser' => '{{owncloud_settings.database.user}}',
+  'dbpassword' => '{{owncloud_settings.database.password}}',
+  'logtimezone' => 'UTC',
+  'installed' => true,
+  'mail_from_address' => 'owncloud',
+  'mail_smtpmode' => 'php',
+  'mail_domain' => '{{salt['grains.get']('domain', 'local')}}',
+  {%- for k, v in owncloud_settings.memcache.iteritems() %}
+  'memcache.{{k}}' => '{{v}}',
+  {%- endfor %}
+  'redis' => array(
+      'host' => '{{owncloud_settings.redis.host}}',
+      'port' => {{owncloud_settings.redis.port}},
+       ),
+);

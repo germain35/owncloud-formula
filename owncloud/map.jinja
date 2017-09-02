@@ -15,14 +15,18 @@
 
 {% set os_map = salt['grains.filter_by']({
     'Debian': {
-        'packages': ['owncloud'],
+        'packages': ['owncloud', 'php-apcu', 'redis-server'],
         'service': 'apache2',
         'repo': {
-          'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud_settings.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/ /' ,
+          'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud_settings.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/ /',
           'file': '/etc/apt/sources.list.d/owncloud.list',
           'key_url': 'https://download.owncloud.org/download/repositories/Release.key',
-        }
-        
+        },
+        'user': {
+          'name': 'www-data',
+          'group': 'www-data',
+        },
+        'config_file': '/var/www/owncloud/config/config.php'
     },
 }, grain='os_family', merge=salt['pillar.get']('owncloud:lookup')) %}
 

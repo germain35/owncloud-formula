@@ -3,3 +3,18 @@
 owncloud:
   version: stable
   manage_repo: True
+  data_dir: /var/lib/owncloud/data
+  trusted_domains:
+    - owncloud.local
+  database:
+    type: mysql
+    host: localhost
+    name: owncloud
+    user: owncloud
+    password: stupidpassword
+  memcache:
+    locking: '\OC\Memcache\Redis'
+    local: '\OC\Memcache\APCu'
+  redis:
+    host: localhost
+    port: 6379
