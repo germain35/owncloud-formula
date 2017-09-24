@@ -20,16 +20,16 @@ owncloud_data_dir:
     - watch_in:
       - service: owncloud_service
 
-owncloud_config:
-  file.managed:
-    - name: {{owncloud_settings.config_file}}
-    - source: salt://owncloud/templates/config.php.jinja2
-    - template: jinja
-    - user: {{owncloud_settings.user.name}}
-    - group: {{owncloud_settings.user.group}}
-    - mode: 640
-    - require:
-      - sls: owncloud.install
-      - file: owncloud_data_dir
-    - watch_in:
-      - service: owncloud_service
+#owncloud_config:
+#  file.managed:
+#    - name: {{owncloud_settings.config_file}}
+#    - source: salt://owncloud/templates/config.php.jinja2
+#    - template: jinja
+#    - user: {{owncloud_settings.user.name}}
+#    - group: {{owncloud_settings.user.group}}
+#    - mode: 640
+#    - require:
+#      - sls: owncloud.install
+#      - file: owncloud_data_dir
+#    - watch_in:
+#      - service: owncloud_service

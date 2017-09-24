@@ -1,5 +1,6 @@
 owncloud:
-  version: stable
+  version: 10.0
+  manage_deps: True
   data_dir: /users/owncloud/data
   database:
     type: mysql

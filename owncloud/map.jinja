@@ -15,12 +15,13 @@
 
 {% set os_map = salt['grains.filter_by']({
     'Debian': {
-        'packages': ['owncloud', 'php-apcu', 'redis-server'],
+        'packages': ['owncloud-files'],
+        'packages_deps': ['apache2', 'mariadb-server', 'libapache2-mod-php7.0', 'php7.0-gd', 'php7.0-json', 'php7.0-mysql', 'php7.0-curl', 'php7.0-intl', 'php7.0-mcrypt', 'php-imagick', 'php7.0-zip', 'php7.0-xml', 'php7.0-mbstring', 'php7.0-ldap', 'php-smbclient', 'php-apcu', 'php-redis', 'redis-server'],
         'service': 'apache2',
         'repo': {
           'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud_settings.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/ /',
           'file': '/etc/apt/sources.list.d/owncloud.list',
-          'key_url': 'https://download.owncloud.org/download/repositories/Release.key',
+          'key_url': 'https://download.owncloud.org/download/repositories/' ~ owncloud_settings.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/Release.key ',
         },
         'user': {
           'name': 'www-data',

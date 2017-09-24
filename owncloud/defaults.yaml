@@ -3,6 +3,7 @@
 owncloud:
   version: stable
   manage_repo: True
+  manage_deps: False
   data_dir: /var/lib/owncloud/data
   trusted_domains:
     - owncloud.local
