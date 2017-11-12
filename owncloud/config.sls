@@ -1,4 +1,4 @@
-{% from "owncloud/map.jinja" import owncloud_settings with context %}
+{% from "owncloud/map.jinja" import owncloud with context %}
 
 {%- set os         = salt['grains.get']('os') %}
 {%- set os_family  = salt['grains.get']('os_family') %}
@@ -11,9 +11,9 @@ include:
 
 owncloud_data_dir:
   file.directory:
-    - name: {{owncloud_settings.data_dir}}
-    - user: {{owncloud_settings.user.name}}
-    - group: {{owncloud_settings.user.group}}
+    - name: {{owncloud.data_dir}}
+    - user: {{owncloud.user.name}}
+    - group: {{owncloud.user.group}}
     - mode: 775
     - require:
       - sls: owncloud.install
@@ -22,11 +22,11 @@ owncloud_data_dir:
 
 #owncloud_config:
 #  file.managed:
-#    - name: {{owncloud_settings.config_file}}
+#    - name: {{owncloud.config_file}}
 #    - source: salt://owncloud/templates/config.php.jinja2
 #    - template: jinja
-#    - user: {{owncloud_settings.user.name}}
-#    - group: {{owncloud_settings.user.group}}
+#    - user: {{owncloud.user.name}}
+#    - group: {{owncloud.user.group}}
 #    - mode: 640
 #    - require:
 #      - sls: owncloud.install

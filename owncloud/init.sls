@@ -1,4 +1,4 @@
-{% from "owncloud/map.jinja" import owncloud_settings with context %}
+{% from "owncloud/map.jinja" import owncloud with context %}
 
 include:
   - owncloud.install

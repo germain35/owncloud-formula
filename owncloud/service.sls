@@ -1,11 +1,11 @@
-{% from "owncloud/map.jinja" import owncloud_settings with context %}
+{% from "owncloud/map.jinja" import owncloud with context %}
 
 include:
   - owncloud.install
 
 owncloud_service:
   service.running:
-    - name: {{ owncloud_settings.service }}
+    - name: {{ owncloud.service }}
     - enable: True
     - require:
       - pkg: owncloud_packages

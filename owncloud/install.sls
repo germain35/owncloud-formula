@@ -1,4 +1,4 @@
-{% from "owncloud/map.jinja" import owncloud_settings with context %}
+{% from "owncloud/map.jinja" import owncloud with context %}
 
 {%- set os         = salt['grains.get']('os') %}
 {%- set os_family  = salt['grains.get']('os_family') %}
@@ -8,11 +8,11 @@
 include:
   - owncloud.service
 
-{%- if owncloud_settings.manage_repo %}
-  {%- if 'repo' in owncloud_settings and owncloud_settings.repo is mapping %}
+{%- if owncloud.manage_repo %}
+  {%- if 'repo' in owncloud and owncloud.repo is mapping %}
 owncloud_repo:
   pkgrepo.managed:
-    {%- for k, v in owncloud_settings.repo.iteritems() %}
+    {%- for k, v in owncloud.repo.iteritems() %}
     - {{k}}: {{v}}
     {%- endfor %}
     - require_in:
@@ -20,17 +20,17 @@ owncloud_repo:
   {%- endif %}
 {%- endif %}
 
-{%- if owncloud_settings.manage_deps %}
+{%- if owncloud.manage_deps %}
 owncloud_packages_deps:
   pkg.installed:
-    - pkgs: {{owncloud_settings.packages_deps}}
+    - pkgs: {{owncloud.packages_deps}}
     - require_in:
       - pkg: owncloud_packages
 {%- endif %}
 
 owncloud_packages:
   pkg.installed:
-    - pkgs: {{owncloud_settings.packages}}
+    - pkgs: {{owncloud.packages}}
     - watch_in:
       - service: owncloud_service
 
