@@ -3,6 +3,7 @@
 
 {%- set os         = salt['grains.get']('os') %}
 {%- set osrelease  = salt['grains.get']('osrelease') %}
+{%- set osmajorrelease  = salt['grains.get']('osmajorrelease') %}
 {%- set oscodename = salt['grains.get']('oscodename') %}
 
 {## Start with  defaults from defaults.sls ##}
@@ -25,9 +26,9 @@ that differ from whats in defaults.yaml
     'packages_deps': ['apache2', 'mariadb-server', 'libapache2-mod-php7.0', 'php7.0-gd', 'php7.0-json', 'php7.0-mysql', 'php7.0-curl', 'php7.0-intl', 'php7.0-mcrypt', 'php-imagick', 'php7.0-zip', 'php7.0-xml', 'php7.0-mbstring', 'php7.0-ldap', 'php-smbclient', 'php-apcu', 'php-redis', 'redis-server'],
     'service': 'apache2',
     'repo': {
-      'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/ /',
+      'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osmajorrelease ~ '.0' ~ '/ /',
       'file': '/etc/apt/sources.list.d/owncloud.list',
-      'key_url': 'https://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/Release.key ',
+      'key_url': 'https://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osmajorrelease ~ '.0' ~ '/Release.key ',
     },
     'user': {
       'name': 'www-data',

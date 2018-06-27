@@ -25,7 +25,7 @@ $CONFIG = array (
   'mail_from_address' => 'owncloud',
   'mail_smtpmode' => 'php',
   'mail_domain' => '{{salt['grains.get']('domain', 'local')}}',
-  {%- for k, v in owncloud.memcache.iteritems() %}
+  {%- for k, v in owncloud.memcache.items() %}
   'memcache.{{k}}' => '{{v}}',
   {%- endfor %}
   'redis' => array(

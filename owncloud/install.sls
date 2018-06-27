@@ -12,7 +12,7 @@ include:
   {%- if 'repo' in owncloud and owncloud.repo is mapping %}
 owncloud_repo:
   pkgrepo.managed:
-    {%- for k, v in owncloud.repo.iteritems() %}
+    {%- for k, v in owncloud.repo.items() %}
     - {{k}}: {{v}}
     {%- endfor %}
     - require_in:

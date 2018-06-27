@@ -15,6 +15,7 @@ owncloud_data_dir:
     - user: {{owncloud.user.name}}
     - group: {{owncloud.user.group}}
     - mode: 775
+    - makedirs: True
     - require:
       - sls: owncloud.install
     - watch_in:
