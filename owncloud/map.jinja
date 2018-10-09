@@ -16,14 +16,17 @@
   merge=True)
 %}
 
-{## 
+{##
 Setup variable using grains['os_family'] based logic, only add key:values here
 that differ from whats in defaults.yaml
 ##}
 {% set os_family_map = salt['grains.filter_by']({
   'Debian': {
     'packages': ['owncloud-files'],
-    'packages_deps': ['apache2', 'mariadb-server', 'libapache2-mod-php7.0', 'php7.0-gd', 'php7.0-json', 'php7.0-mysql', 'php7.0-curl', 'php7.0-intl', 'php7.0-mcrypt', 'php-imagick', 'php7.0-zip', 'php7.0-xml', 'php7.0-mbstring', 'php7.0-ldap', 'php-smbclient', 'php-apcu', 'php-redis', 'redis-server'],
+    'packages_deps': salt['grains.filter_by']({
+        'bionic': ['php-bz2', 'php-curl', 'php-gd', 'php-apcu', 'php-curl', 'php-imagick', 'php-mysql', 'php-intl', 'php-mbstring', 'php-json', 'php-xml', 'php-zip', 'php-redis'],
+        'stretch': ['php7.0-gd', 'php7.0-json', 'php7.0-mysql', 'php7.0-curl', 'php7.0-intl', 'php7.0-mcrypt', 'php-imagick', 'php7.0-zip', 'php7.0-xml', 'php7.0-mbstring', 'php7.0-ldap', 'php-smbclient', 'php-apcu', 'php-redis'],
+    }, grain="oscodename", default="stretch"),
     'service': 'apache2',
     'repo': {
       'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osmajorrelease ~ '.0' ~ '/ /',
@@ -41,4 +44,3 @@ that differ from whats in defaults.yaml
 
 {## Merge the flavor_map to the default settings ##}
 {% do owncloud.update(os_family_map) %}
-
