@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja:ts=2:sw=2
 
-{%- set os         = salt['grains.get']('os') %}
-{%- set osrelease  = salt['grains.get']('osrelease') %}
-{%- set osmajorrelease  = salt['grains.get']('osmajorrelease') %}
+{%- set os = salt['grains.get']('os') %}
+{%- set osrelease = salt['grains.get']('osrelease') %}
+{%- set osmajorrelease = salt['grains.get']('osmajorrelease') %}
 {%- set oscodename = salt['grains.get']('oscodename') %}
 
 {## Start with  defaults from defaults.sls ##}
@@ -29,9 +29,15 @@ that differ from whats in defaults.yaml
     }, grain="oscodename", default="stretch"),
     'service': 'apache2',
     'repo': {
-      'name': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osmajorrelease ~ '.0' ~ '/ /',
+      'name': salt['grains.filter_by']({
+          'Debian': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osmajorrelease ~ '.0' ~ '/ /',
+          'Ubuntu': 'deb http://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/ /',
+      }, grain="os", default="Debian"),
+      'key_url': salt['grains.filter_by']({
+          'Debian': 'https://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osmajorrelease ~ '.0' ~ '/Release.key ',
+          'Ubuntu': 'https://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osrelease ~ '/Release.key ',
+      }, grain="os", default="Debian"),
       'file': '/etc/apt/sources.list.d/owncloud.list',
-      'key_url': 'https://download.owncloud.org/download/repositories/' ~ owncloud.version ~ '/' ~ os ~ '_' ~ osmajorrelease ~ '.0' ~ '/Release.key ',
     },
     'user': {
       'name': 'www-data',
