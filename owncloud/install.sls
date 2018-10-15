@@ -20,10 +20,10 @@ owncloud_repo:
   {%- endif %}
 {%- endif %}
 
-{%- if owncloud.manage_deps %}
-owncloud_packages_deps:
+{%- if owncloud.manage_optional_packages %}
+owncloud_optional_packages:
   pkg.installed:
-    - pkgs: {{owncloud.packages_deps}}
+    - pkgs: {{owncloud.optional_packages}}
     - require_in:
       - pkg: owncloud_packages
 {%- endif %}
@@ -33,4 +33,3 @@ owncloud_packages:
     - pkgs: {{owncloud.packages}}
     - watch_in:
       - service: owncloud_service
-

@@ -2,8 +2,10 @@
 # vim: ft=yaml
 owncloud:
   version: stable
+
   manage_repo: True
-  manage_deps: False
+  manage_optional_packages: False
+
   data_dir: /var/lib/owncloud/data
   trusted_domains:
     - owncloud.local
