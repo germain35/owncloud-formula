@@ -1,0 +1,29 @@
+{%- from "owncloud/map.jinja" import owncloud with context -%}
+#!/bin/bash
+
+BACKUP_DIR="{{ owncloud.backup.dir }}"
+RETENTION={{ owncloud.backup.retention }}
+
+if [[ -z "$BACKUP_DIR" ]] || [[ "$BACKUP_DIR" == '/' ]]
+then
+  echo "error, backup directory is incorrect"
+  exit 1
+fi
+
+current_date=$(date +'%Y%m%d%H%M%S')
+
+echo "create backup directory"
+mkdir -p ${BACKUP_DIR}/${current_date}
+
+echo "rsync..."
+rsync -AaHxv {{ owncloud.config_dir }} {{ owncloud.data_dir }} ${BACKUP_DIR}/${current_date}/
+if [[ $? -eq 0 ]]
+  then
+    echo "OK"
+  else
+    echo "ERROR"
+  fi
+
+echo
+echo "purge old backups"
+find "${BACKUP_DIR}" -mtime +${RETENTION} -exec rm -vf {} \;

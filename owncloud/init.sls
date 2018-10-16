@@ -4,3 +4,6 @@ include:
   - owncloud.install
   - owncloud.config
   - owncloud.service
+  {%- if owncloud.backup.enabled %}
+  - owncloud.backup
+  {%- endif %}

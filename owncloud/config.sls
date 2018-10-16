@@ -24,7 +24,7 @@ owncloud_data_dir:
 #owncloud_config:
 #  file.managed:
 #    - name: {{owncloud.config_file}}
-#    - source: salt://owncloud/templates/config.php.jinja2
+#    - source: salt://owncloud/templates/config.php.j2
 #    - template: jinja
 #    - user: {{owncloud.user.name}}
 #    - group: {{owncloud.user.group}}
