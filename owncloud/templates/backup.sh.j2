@@ -26,4 +26,4 @@ if [[ $? -eq 0 ]]
 
 echo
 echo "purge old backups"
-find "${BACKUP_DIR}" -mtime +${RETENTION} -exec rm -vf {} \;
+find "${BACKUP_DIR}" -mindepth 1 -maxdepth 1 -mtime +${RETENTION} -exec rm -vf {} \;
