@@ -16,7 +16,7 @@ echo "create backup directory"
 mkdir -p ${BACKUP_DIR}/${current_date}
 
 echo "rsync..."
-rsync -AaHxv {{ owncloud.config_dir }} {{ owncloud.data_dir }} ${BACKUP_DIR}/${current_date}/
+rsync -AalHxv {{ owncloud.config_dir }} {{ owncloud.data_dir }} ${BACKUP_DIR}/${current_date}/
 if [[ $? -eq 0 ]]
   then
     echo "OK"
